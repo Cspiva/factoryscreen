@@ -390,6 +390,14 @@
         animation-iteration-count: 1 !important;
       }
     }
+
+    @media (max-width: 700px) and (orientation: portrait) {
+      .screensaver {
+        width: max(100vw, calc(100vh * 1.05));
+        height: max(100vh, calc(100vw / 1.05));
+        transform: translateX(calc((100vw - max(100vw, calc(100vh * 1.05))) * 0.34));
+      }
+    }
   </style>
 </head>
 <body>
