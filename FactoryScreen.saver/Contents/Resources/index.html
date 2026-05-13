@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factory Screensaver</title>
+  <style>
+    :root {
+      --teal: #668f84;
+      --teal-dark: #4e766e;
+      --red: #9d343f;
+      --orange: #c76b32;
+      --gold: #d0aa5f;
+      --cream: #dedfc4;
+      --mint: #8bb894;
+      --mint-light: #a4c9a3;
+      --ink: #3f3547;
+      --navy: #3f3547;
+      --plum: #3f3547;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--teal);
+    }
+
+    .screensaver {
+      position: relative;
+      width: max(100vw, calc(100vh * 1.747));
+      height: max(100vh, calc(100vw / 1.747));
+      overflow: hidden;
+      border-radius: 0;
+      background: var(--teal);
+      isolation: isolate;
+    }
+
+    .left-rail {
+      position: absolute;
+      left: 0;
+      top: 31.7%;
+      width: 33.2%;
+      height: 34%;
+      background: var(--navy);
+    }
+
+    .lower-left-block {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 33.2%;
+      height: 34%;
+      background:
+        linear-gradient(90deg, var(--orange) 0 49.5%, var(--gold) 49.5% 100%),
+        var(--teal);
+      background-size: 100% 82%, 100% 100%;
+      background-position: left top, left top;
+      background-repeat: no-repeat;
+      z-index: 7;
+      animation: pressBlock 4.4s ease-in-out infinite;
+    }
+
+    .lower-center-block {
+      position: absolute;
+      left: 33.1%;
+      bottom: 0;
+      width: 33.5%;
+      height: 33.8%;
+      background: var(--gold);
+      z-index: 3;
+    }
+
+    .top-left-machine {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 33.2%;
+      height: 31.9%;
+      background: var(--teal);
+      overflow: hidden;
+      z-index: 3;
+    }
+
+    .top-left-machine::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      transform-origin: right bottom;
+      animation: diagonalGate 5.2s cubic-bezier(.45, 0, .2, 1) infinite;
+    }
+
+    .top-left-machine::after {
+      content: "";
+      position: absolute;
+      right: -1%;
+      top: -8%;
+      width: 12%;
+      height: 125%;
+      background: var(--ink);
+      animation: pistonTap 2.8s ease-in-out infinite;
+    }
+
+    .leaf-chamber {
+      position: absolute;
+      top: 0;
+      left: 33.1%;
+      width: 33.5%;
+      height: 66.2%;
+      background: var(--cream);
+      overflow: hidden;
+      z-index: 4;
+    }
+
+    .leaf {
+      position: absolute;
+      left: -6%;
+      top: 0;
+      width: 112%;
+      height: 52%;
+      border-bottom-right-radius: 48%;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .leaf::before,
+    .leaf::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 56%;
+      height: 100%;
+      background: var(--mint);
+      will-change: transform;
+    }
+
+    .leaf::before {
+      left: 0;
+      border-top-left-radius: 70% 100%;
+      transform-origin: left center;
+      animation: flapLeft 5.8s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .leaf::after {
+      right: 0;
+      bottom: -4%;
+      height: 104%;
+      border-bottom-right-radius: 100% 100%;
+      transform-origin: right center;
+      animation: flapRight 5.8s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .right-belt {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 33.4%;
+      height: 100%;
+      background: var(--gold);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .right-belt::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.08));
+      mix-blend-mode: soft-light;
+    }
+
+    .belt-window {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 15.1%;
+      bottom: 33.8%;
+      overflow: hidden;
+    }
+
+    .belt-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -100%;
+      height: 200%;
+      background:
+        linear-gradient(
+          to bottom,
+          var(--red) 0 12.5%,
+          var(--orange) 12.5% 25%,
+          var(--plum) 25% 37.5%,
+          var(--red) 37.5% 50%,
+          var(--red) 50% 62.5%,
+          var(--orange) 62.5% 75%,
+          var(--plum) 75% 87.5%,
+          var(--red) 87.5% 100%
+        );
+      animation: beltRun 3s linear infinite;
+      will-change: transform;
+    }
+
+    .front-square {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 33.4%;
+      height: 33.8%;
+      overflow: hidden;
+      background: var(--teal);
+      z-index: 9;
+      animation: frontPlateFloat 5.6s ease-in-out infinite;
+    }
+
+    .front-square::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      clip-path: polygon(0 0, 0 100%, 100% 0);
+      transform-origin: left top;
+      animation: lowerGate 5.2s cubic-bezier(.45, 0, .2, 1) infinite;
+    }
+
+    .front-square::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -0.35%;
+      height: 1.1%;
+      background: var(--red);
+    }
+
+    .rotor-wrap {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 66.6%;
+      height: 67.6%;
+      z-index: 8;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .rotor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          from 0deg,
+          var(--orange) 0deg 90deg,
+          var(--teal) 90deg 180deg,
+          var(--plum) 180deg 270deg,
+          var(--gold) 270deg 360deg
+        );
+      transform-origin: 50% 50%;
+      animation: rotorSpin 7s linear infinite;
+    }
+
+    .soft-shadow {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    @keyframes rotorSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes beltRun {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(50%);
+      }
+    }
+
+    @keyframes frontPlateFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-2.8%);
+      }
+    }
+
+    @keyframes diagonalGate {
+      0%,
+      100% {
+        transform: scale(0.58);
+      }
+      48% {
+        transform: scale(1.08);
+      }
+      72% {
+        transform: scale(0.84);
+      }
+    }
+
+    @keyframes lowerGate {
+      0%,
+      100% {
+        transform: scale(1.08);
+      }
+      48% {
+        transform: scale(0.58);
+      }
+      72% {
+        transform: scale(0.84);
+      }
+    }
+
+    @keyframes pistonTap {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      35% {
+        transform: translateY(7%);
+      }
+      55% {
+        transform: translateY(-3%);
+      }
+    }
+
+    @keyframes flapLeft {
+      0%,
+      100% {
+        transform: scaleX(1);
+      }
+      44% {
+        transform: scaleX(0.54);
+      }
+      70% {
+        transform: scaleX(0.82);
+      }
+    }
+
+    @keyframes flapRight {
+      0%,
+      100% {
+        transform: scaleX(1);
+      }
+      44% {
+        transform: scaleX(0.54);
+      }
+      70% {
+        transform: scaleX(0.82);
+      }
+    }
+
+    @keyframes pressBlock {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(8%);
+      }
+      60% {
+        transform: translateY(-3%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+    @media (max-width: 700px) and (orientation: portrait) {
+      .screensaver {
+        width: max(100vw, calc(100vh * 1.05));
+        height: max(100vh, calc(100vw / 1.05));
+        transform: translateX(calc((100vw - max(100vw, calc(100vh * 1.05))) * 0.52));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="screensaver" aria-label="Animated abstract factory screensaver">
+    <div class="right-belt">
+      <div class="belt-window">
+        <div class="belt-track"></div>
+      </div>
+    </div>
+    <div class="top-left-machine"></div>
+    <div class="leaf-chamber">
+      <div class="leaf"></div>
+    </div>
+    <div class="left-rail"></div>
+    <div class="lower-left-block"></div>
+    <div class="lower-center-block"></div>
+    <div class="rotor-wrap">
+      <div class="rotor"></div>
+    </div>
+    <div class="front-square"></div>
+    <div class="soft-shadow"></div>
+  </main>
+</body>
+</html>
